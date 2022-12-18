@@ -1,7 +1,8 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/index.js',
+    mode: 'development',
+    entry: './src/javascript-modules/index.js',
     devtool: 'inline-source-map',
     output: {
         filename: 'main.js',
@@ -16,6 +17,10 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: 'asset/resource'
+            },
+            {
+                test: /\.mp4$/,
+                use: 'file-loader?name=videos/[name].[ext]'
             }
         ]
     }
