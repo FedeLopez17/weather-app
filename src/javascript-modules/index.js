@@ -35,6 +35,14 @@ import snowDayVideo from '../videos/snow-day.mp4';
 import snowNightVideo from '../videos/snow-night.mp4';
 import thunderstormVideo from '../videos/thunderstorm.mp4';
 
+// import weather details icons
+import temperatureIconSource from '../images/thermometer.svg';
+import humidityIconSource from '../images/humidity.svg';
+import windSpeedIconSource from '../images/wind-speed.svg';
+
+// import error messagge icon
+import warningIcon from '../images/attention.svg';
+
 let lastSearch = null;
 
 const container = document.querySelector('#content');
@@ -71,10 +79,15 @@ const WEATHER_MEDIA = {
 };
 
 function displayErrorMessage() {
-    const errorMessage = document.querySelector('p.error-message');
+    const errorMessage = document.querySelector('.error-message');
     if (errorMessage) {
-        errorMessage.innerText = `Something went wrong.
-        Make sure you enter a valid location!`;
+        errorMessage.innerText =
+            'Something went wrong. Make sure you enter a valid location!';
+    }
+
+    const errorMessageContainer = errorMessage.parentElement;
+    if (errorMessageContainer.classList.contains('hidden')) {
+        errorMessageContainer.classList.remove('hidden');
     }
 }
 
@@ -120,9 +133,16 @@ function displayInitialScreen() {
     searchBar.placeholder = 'Enter a city';
     main.appendChild(searchBar);
 
-    const errorMessage = document.createElement('p');
+    const errorMessageContainer = document.createElement('section');
+    errorMessageContainer.classList.add('error-message-container', 'hidden');
+    const errorMessageIcon = document.createElement('img');
+    errorMessageIcon.src = warningIcon;
+    errorMessageIcon.classList.add('error-message-icon');
+    errorMessageContainer.appendChild(errorMessageIcon);
+    const errorMessage = document.createElement('span');
     errorMessage.classList.add('error-message');
-    main.appendChild(errorMessage);
+    errorMessageContainer.appendChild(errorMessage);
+    main.appendChild(errorMessageContainer);
 }
 
 function capitalize(string) {
@@ -142,18 +162,17 @@ function displayWeatherInformationScreen(weatherData, unit) {
     backgroundVideo.onloadeddata = removeLoadingAnimation;
     main.appendChild(backgroundVideo);
 
+    const topWrapper = document.createElement('section');
+    topWrapper.classList.add('wrapper');
+    topWrapper.id = 'top';
+    main.appendChild(topWrapper);
+
     const goBackArrow = document.createElement('i');
     goBackArrow.classList.add('fa-solid', 'fa-circle-chevron-left');
     goBackArrow.id = 'go-back-button';
     goBackArrow.title = 'GO BACK';
     goBackArrow.addEventListener('click', displayInitialScreen);
-    main.appendChild(goBackArrow);
-
-    const unitsToggle = document.createElement('p');
-    unitsToggle.id = 'units-toggle';
-    unitsToggle.innerText = `Display ${unit === 'metric' ? '°F' : '°C'}`;
-    unitsToggle.addEventListener('click', toggleUnits);
-    main.appendChild(unitsToggle);
+    topWrapper.appendChild(goBackArrow);
 
     const cityTitle = document.createElement('p');
     cityTitle.id = 'city-title';
@@ -163,31 +182,42 @@ function displayWeatherInformationScreen(weatherData, unit) {
             ? weatherData.state
             : weatherData.countryCode
     }`;
-    main.appendChild(cityTitle);
+    topWrapper.appendChild(cityTitle);
+
+    const centralWrapper = document.createElement('section');
+    centralWrapper.classList.add('wrapper');
+    centralWrapper.id = 'central';
+    main.appendChild(centralWrapper);
 
     const weatherIcon = document.createElement('img');
     weatherIcon.id = 'weather-icon';
     weatherIcon.src = WEATHER_MEDIA[weatherData.weatherIconId].icon;
     weatherIcon.alt = `${weatherData.weather} weather icon`;
-    main.appendChild(weatherIcon);
-
-    const weather = document.createElement('p');
-    weather.id = 'weather';
-    weather.innerText = weatherData.weather;
-    main.appendChild(weather);
-
-    const weatherDescription = document.createElement('p');
-    weatherDescription.id = 'weather-description';
-    weatherDescription.innerText = capitalize(weatherData.weatherDescription);
-    main.appendChild(weatherDescription);
+    centralWrapper.appendChild(weatherIcon);
 
     const temperature = document.createElement('p');
     temperature.id = 'temperature';
     temperature.innerText = `${weatherData.temperature} ${UNITS[unit].temperature}`;
-    main.appendChild(temperature);
+    centralWrapper.appendChild(temperature);
 
-    const feelsLike = document.createElement('p');
+    const unitsToggle = document.createElement('p');
+    unitsToggle.id = 'units-toggle';
+    unitsToggle.innerText = `Display ${unit === 'metric' ? '°F' : '°C'}`;
+    unitsToggle.addEventListener('click', toggleUnits);
+    centralWrapper.appendChild(unitsToggle);
+
+    const bottomLeftWrapper = document.createElement('section');
+    bottomLeftWrapper.classList.add('wrapper');
+    bottomLeftWrapper.id = 'bottom-left';
+    main.appendChild(bottomLeftWrapper);
+
+    const feelsLike = document.createElement('section');
+    feelsLike.classList.add('details');
     feelsLike.id = 'feels-like';
+    const feelsLikeIcon = document.createElement('img');
+    feelsLikeIcon.src = temperatureIconSource;
+    feelsLikeIcon.classList.add('details-icon');
+    feelsLike.appendChild(feelsLikeIcon);
     const feelsLikeTitle = document.createElement('span');
     feelsLikeTitle.classList.add('title');
     feelsLikeTitle.innerText = 'Feels like: ';
@@ -196,10 +226,15 @@ function displayWeatherInformationScreen(weatherData, unit) {
     feelsLikeValue.classList.add('value');
     feelsLikeValue.innerText = `${weatherData.feelsLike} ${UNITS[unit].temperature}`;
     feelsLike.appendChild(feelsLikeValue);
-    main.appendChild(feelsLike);
+    bottomLeftWrapper.appendChild(feelsLike);
 
-    const humidity = document.createElement('p');
+    const humidity = document.createElement('section');
+    humidity.classList.add('details');
     humidity.id = 'humidity';
+    const humidityIcon = document.createElement('img');
+    humidityIcon.src = humidityIconSource;
+    humidityIcon.classList.add('details-icon');
+    humidity.appendChild(humidityIcon);
     const humidityTitle = document.createElement('span');
     humidityTitle.classList.add('title');
     humidityTitle.innerText = 'Humidity: ';
@@ -208,10 +243,15 @@ function displayWeatherInformationScreen(weatherData, unit) {
     humidityValue.classList.add('value');
     humidityValue.innerText = `${weatherData.humidity}%`;
     humidity.appendChild(humidityValue);
-    main.appendChild(humidity);
+    bottomLeftWrapper.appendChild(humidity);
 
-    const windSpeed = document.createElement('p');
+    const windSpeed = document.createElement('section');
+    windSpeed.classList.add('details');
     windSpeed.id = 'wind-speed';
+    const windSpeedIcon = document.createElement('img');
+    windSpeedIcon.src = windSpeedIconSource;
+    windSpeedIcon.classList.add('details-icon');
+    windSpeed.appendChild(windSpeedIcon);
     const windSpeedTitle = document.createElement('span');
     windSpeedTitle.classList.add('title');
     windSpeedTitle.innerText = 'Wind speed: ';
@@ -220,7 +260,22 @@ function displayWeatherInformationScreen(weatherData, unit) {
     windSpeedValue.classList.add('value');
     windSpeedValue.innerText = `${weatherData.windSpeed} ${UNITS[unit].speed}`;
     windSpeed.appendChild(windSpeedValue);
-    main.appendChild(windSpeed);
+    bottomLeftWrapper.appendChild(windSpeed);
+
+    const bottomRightWrapper = document.createElement('section');
+    bottomRightWrapper.classList.add('wrapper');
+    bottomRightWrapper.id = 'bottom-right';
+    main.appendChild(bottomRightWrapper);
+
+    const weather = document.createElement('p');
+    weather.id = 'weather';
+    weather.innerText = weatherData.weather;
+    bottomRightWrapper.appendChild(weather);
+
+    const weatherDescription = document.createElement('p');
+    weatherDescription.id = 'weather-description';
+    weatherDescription.innerText = capitalize(weatherData.weatherDescription);
+    bottomRightWrapper.appendChild(weatherDescription);
 }
 
 async function getAndDisplayWeatherData(location, unit) {
@@ -256,4 +311,40 @@ function toggleUnits() {
     getAndDisplayWeatherData(lastSearch, currentUnit);
 }
 
+function createCustomCursor() {
+    const customCursor = document.createElement('section');
+    customCursor.id = 'custom-cursor';
+    container.appendChild(customCursor);
+
+    const customCursorWidth = window
+        .getComputedStyle(customCursor)
+        .getPropertyValue('width');
+
+    let hideCursorTimer = null;
+
+    function hideCursor() {
+        customCursor.classList.add('hidden');
+    }
+
+    function makeSureCursorIsVisible() {
+        if (customCursor.classList.contains('hidden')) {
+            customCursor.classList.remove('hidden');
+        }
+    }
+
+    document.addEventListener('mousemove', (event) => {
+        if (hideCursorTimer) {
+            window.clearTimeout(hideCursorTimer);
+        }
+
+        makeSureCursorIsVisible();
+
+        hideCursorTimer = window.setTimeout(hideCursor, 3000);
+
+        customCursor.style.left = `calc(${event.clientX}px - ${customCursorWidth}/2)`;
+        customCursor.style.top = `calc(${event.clientY}px - ${customCursorWidth}/2)`;
+    });
+}
+
+createCustomCursor();
 displayInitialScreen();
