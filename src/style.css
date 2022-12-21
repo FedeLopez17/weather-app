@@ -193,12 +193,13 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     gap: 1.5rem;
     font-size: 2rem;
     font-weight: 900;
+    filter: drop-shadow(0px 0px 2px rgb(60 60 60));
 }
 
 #weather-information-screen #go-back-button {
     font-size: 2rem;
     cursor: pointer;
-    filter: brightness(0.5);
+    filter: brightness(0.8);
     transition: filter 0.2s;
 }
 
@@ -216,6 +217,7 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    filter: drop-shadow(0px 0px 2px rgb(60 60 60));
 }
 
 #weather-information-screen img#weather-icon {
@@ -258,6 +260,7 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     align-items: flex-start;
     justify-content: space-evenly;
     gap: 1rem;
+    filter: drop-shadow(0px 0px 2px rgb(60 60 60));
 }
 
 #weather-information-screen .details {
@@ -283,6 +286,7 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
+    filter: drop-shadow(0px 0px 2px rgb(60 60 60));
 }
 
 #weather-information-screen .wrapper#bottom-right #weather {
