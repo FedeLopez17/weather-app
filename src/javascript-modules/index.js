@@ -97,7 +97,11 @@ function displayLoadingScreen() {
 
     const loadingScreen = document.createElement('section');
     loadingScreen.id = 'loading-screen';
-    loadingScreen.innerText = 'LOADING...';
+
+    const loadingText = document.createElement('p');
+    loadingText.classList.add('loading-text');
+    loadingText.innerText = 'LOADING...';
+    loadingScreen.appendChild(loadingText);
 
     container.appendChild(loadingScreen);
 }

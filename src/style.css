@@ -303,12 +303,44 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     width: 100vw;
     height: 100vh;
     top: 0;
+    animation: fade-in 0.05s ease-in forwards;
     pointer-events: none;
-    background-color: black;
-    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-end;
+    box-sizing: border-box;
+    padding: 1rem;
+    color: white;
+    font-size: 1.2rem;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.loading-text {
+    margin: 0;
+    animation: breath 1.5s linear infinite;
+}
+
+@keyframes breath {
+    0% {
+        opacity: 0;
+    }
+    40%,
+    60% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 /* Media queries for responsiveness */
