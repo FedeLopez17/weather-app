@@ -105,11 +105,66 @@ function removeLoadingAnimation() {
     if (loadingAnimation) loadingAnimation.remove();
 }
 
+function createCustomCursor() {
+    const customCursor = document.createElement('section');
+    customCursor.id = 'custom-cursor';
+    container.appendChild(customCursor);
+
+    const customCursorWidth = window
+        .getComputedStyle(customCursor)
+        .getPropertyValue('width');
+
+    let hideCursorTimer = null;
+
+    function hideCursor() {
+        customCursor.classList.add('hidden');
+    }
+
+    function makeSureCursorIsVisible() {
+        if (customCursor.classList.contains('hidden')) {
+            customCursor.classList.remove('hidden');
+        }
+    }
+
+    document.addEventListener('mousemove', (event) => {
+        if (hideCursorTimer) {
+            window.clearTimeout(hideCursorTimer);
+        }
+
+        makeSureCursorIsVisible();
+
+        hideCursorTimer = window.setTimeout(hideCursor, 3000);
+
+        customCursor.style.left = `calc(${event.clientX}px - ${customCursorWidth}/2)`;
+        customCursor.style.top = `calc(${event.clientY}px - ${customCursorWidth}/2)`;
+    });
+}
+
+function removeCustomCursor() {
+    const customCursor = document.querySelector('#custom-cursor');
+    if (customCursor) customCursor.remove();
+}
+
+function toggleCustomCursor() {
+    const customCursor = document.querySelector('#custom-cursor');
+    if (customCursor) {
+        removeCustomCursor();
+        document.body.className = '';
+    } else {
+        createCustomCursor();
+        document.body.className = 'no-cursor';
+    }
+}
+
 function displayInitialScreen() {
     main.innerHTML = '';
     main.id = 'initial-screen';
 
     displayLoadingAnimation();
+
+    // reset custom cursor
+    const customCursor = document.querySelector('#custom-cursor');
+    if (customCursor) customCursor.className = '';
 
     const backgroundVideo = document.createElement('video');
     backgroundVideo.classList.add('background-video');
@@ -143,6 +198,12 @@ function displayInitialScreen() {
     errorMessage.classList.add('error-message');
     errorMessageContainer.appendChild(errorMessage);
     main.appendChild(errorMessageContainer);
+
+    const customCursorToggle = document.createElement('p');
+    customCursorToggle.id = 'custom-cursor-toggle';
+    customCursorToggle.innerText = 'Toggle custom cursor';
+    customCursorToggle.addEventListener('click', toggleCustomCursor);
+    main.appendChild(customCursorToggle);
 }
 
 function capitalize(string) {
@@ -152,6 +213,18 @@ function capitalize(string) {
 function displayWeatherInformationScreen(weatherData, unit) {
     main.innerHTML = '';
     main.id = 'weather-information-screen';
+
+    // set custom cursor
+    const customCursor = document.querySelector('#custom-cursor');
+    if (customCursor) {
+        if (unit === 'metric') {
+            customCursor.className =
+                weatherData.temperature > 15 ? 'hot' : 'cold';
+        } else {
+            customCursor.className =
+                weatherData.temperature > 60 ? 'hot' : 'cold';
+        }
+    }
 
     const backgroundVideo = document.createElement('video');
     backgroundVideo.classList.add('background-video');
@@ -311,40 +384,4 @@ function toggleUnits() {
     getAndDisplayWeatherData(lastSearch, currentUnit);
 }
 
-function createCustomCursor() {
-    const customCursor = document.createElement('section');
-    customCursor.id = 'custom-cursor';
-    container.appendChild(customCursor);
-
-    const customCursorWidth = window
-        .getComputedStyle(customCursor)
-        .getPropertyValue('width');
-
-    let hideCursorTimer = null;
-
-    function hideCursor() {
-        customCursor.classList.add('hidden');
-    }
-
-    function makeSureCursorIsVisible() {
-        if (customCursor.classList.contains('hidden')) {
-            customCursor.classList.remove('hidden');
-        }
-    }
-
-    document.addEventListener('mousemove', (event) => {
-        if (hideCursorTimer) {
-            window.clearTimeout(hideCursorTimer);
-        }
-
-        makeSureCursorIsVisible();
-
-        hideCursorTimer = window.setTimeout(hideCursor, 3000);
-
-        customCursor.style.left = `calc(${event.clientX}px - ${customCursorWidth}/2)`;
-        customCursor.style.top = `calc(${event.clientY}px - ${customCursorWidth}/2)`;
-    });
-}
-
-createCustomCursor();
 displayInitialScreen();
