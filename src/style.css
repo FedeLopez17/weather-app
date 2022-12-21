@@ -311,4 +311,13 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     #initial-screen #title {
         font-size: 2.5rem;
     }
+    #initial-screen #custom-cursor-toggle {
+        display: none;
+    }
+    body {
+        cursor: initial !important;
+    }
+    #custom-cursor {
+        display: none !important;
+    }
 }
