@@ -296,13 +296,22 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     font-size: 1.5rem;
 }
 
-#loading-animation {
-    background-color: blue;
+/* Loading screen */
+
+#loading-screen {
     position: absolute;
     width: 100vw;
     height: 100vh;
     top: 0;
+    pointer-events: none;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+/* Media queries for responsiveness */
 
 @media (orientation: portrait), (max-width: 600px) {
     :root {

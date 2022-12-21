@@ -91,18 +91,20 @@ function displayErrorMessage() {
     }
 }
 
-function displayLoadingAnimation() {
-    const alreadyOnScreen = document.querySelector('#loading-animation');
+function displayLoadingScreen() {
+    const alreadyOnScreen = document.querySelector('#loading-screen');
     if (alreadyOnScreen) return;
 
-    const loadingAnimation = document.createElement('section');
-    loadingAnimation.id = 'loading-animation';
-    container.appendChild(loadingAnimation);
+    const loadingScreen = document.createElement('section');
+    loadingScreen.id = 'loading-screen';
+    loadingScreen.innerText = 'LOADING...';
+
+    container.appendChild(loadingScreen);
 }
 
-function removeLoadingAnimation() {
-    const loadingAnimation = document.querySelector('#loading-animation');
-    if (loadingAnimation) loadingAnimation.remove();
+function removeLoadingScreen() {
+    const loadingScreen = document.querySelector('#loading-screen');
+    if (loadingScreen) loadingScreen.remove();
 }
 
 function createCustomCursor() {
@@ -160,7 +162,7 @@ function displayInitialScreen() {
     main.innerHTML = '';
     main.id = 'initial-screen';
 
-    displayLoadingAnimation();
+    displayLoadingScreen();
 
     // reset custom cursor
     const customCursor = document.querySelector('#custom-cursor');
@@ -173,7 +175,7 @@ function displayInitialScreen() {
     backgroundVideo.muted = true;
     backgroundVideo.autoplay = true;
     backgroundVideo.loop = true;
-    backgroundVideo.onloadeddata = removeLoadingAnimation;
+    backgroundVideo.onloadeddata = removeLoadingScreen;
     main.appendChild(backgroundVideo);
 
     const title = document.createElement('p');
@@ -232,7 +234,7 @@ function displayWeatherInformationScreen(weatherData, unit) {
     backgroundVideo.muted = true;
     backgroundVideo.autoplay = true;
     backgroundVideo.loop = true;
-    backgroundVideo.onloadeddata = removeLoadingAnimation;
+    backgroundVideo.onloadeddata = removeLoadingScreen;
     main.appendChild(backgroundVideo);
 
     const topWrapper = document.createElement('section');
@@ -352,12 +354,12 @@ function displayWeatherInformationScreen(weatherData, unit) {
 }
 
 async function getAndDisplayWeatherData(location, unit) {
-    displayLoadingAnimation();
+    displayLoadingScreen();
     try {
         const weatherData = await getWeatherData(location, unit);
         displayWeatherInformationScreen(weatherData, unit);
     } catch {
-        removeLoadingAnimation();
+        removeLoadingScreen();
         displayErrorMessage();
     }
 }
