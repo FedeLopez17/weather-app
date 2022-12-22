@@ -2,7 +2,7 @@ const MY_API_KEY = '27c777166bf3f6fa04f43c0835cb89b1';
 
 async function getCoordinates(location) {
     const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${MY_API_KEY}`,
+        `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${MY_API_KEY}`,
         { mode: 'cors' }
     );
 
