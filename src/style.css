@@ -15,7 +15,7 @@ body.no-cursor {
 main {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     min-height: -moz-available;
     min-height: -webkit-fill-available;
     min-height: fill-available;
@@ -307,7 +307,7 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
 #loading-screen {
     position: absolute;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     min-height: -moz-available;
     min-height: -webkit-fill-available;
     min-height: fill-available;
