@@ -308,7 +308,7 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     top: 0;
     animation: fade-in 0.05s ease-in forwards;
     pointer-events: none;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(4px);
     display: flex;
     justify-content: flex-end;
