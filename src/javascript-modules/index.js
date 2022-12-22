@@ -390,4 +390,13 @@ function toggleUnits() {
     getAndDisplayWeatherData(lastSearch, currentUnit);
 }
 
+function calculateAndSetViewportHeight() {
+    const viewportHeight = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${viewportHeight}px`);
+}
+
 displayInitialScreen();
+
+calculateAndSetViewportHeight();
+window.addEventListener('resize', calculateAndSetViewportHeight);
+window.addEventListener('orientationchange', calculateAndSetViewportHeight);

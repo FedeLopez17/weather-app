@@ -15,10 +15,7 @@ body.no-cursor {
 main {
     position: relative;
     width: 100vw;
-    min-height: 100vh;
-    min-height: -moz-available;
-    min-height: -webkit-fill-available;
-    min-height: fill-available;
+    height: calc(100 * var(--vh));
     overflow: hidden;
 }
 
@@ -307,10 +304,7 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
 #loading-screen {
     position: absolute;
     width: 100vw;
-    min-height: 100vh;
-    min-height: -moz-available;
-    min-height: -webkit-fill-available;
-    min-height: fill-available;
+    height: calc(100 * var(--vh));
     top: 0;
     animation: fade-in 0.05s ease-in forwards;
     pointer-events: none;
