@@ -40,8 +40,9 @@ import temperatureIconSource from '../images/thermometer.svg';
 import humidityIconSource from '../images/humidity.svg';
 import windSpeedIconSource from '../images/wind-speed.svg';
 
-// import error messagge icon
+// import error messagge and search icons
 import warningIcon from '../images/attention.svg';
+import searchBarIcon from '../images/search-icon.svg';
 
 let lastSearch = null;
 
@@ -187,12 +188,24 @@ function displayInitialScreen() {
     title.innerText = "What's the weather like in...";
     main.appendChild(title);
 
+    const searchBarWrapper = document.createElement('section');
+    searchBarWrapper.classList.add('search-bar-wrapper');
+    main.appendChild(searchBarWrapper);
     const searchBar = document.createElement('input');
     searchBar.id = 'search-bar';
     searchBar.type = 'text';
     searchBar.autocomplete = 'off';
     searchBar.placeholder = 'Enter a city';
-    main.appendChild(searchBar);
+    searchBarWrapper.appendChild(searchBar);
+    const searchBarButton = document.createElement('img');
+    searchBarButton.id = 'search-bar-button';
+    searchBarButton.src = searchBarIcon;
+    searchBarButton.alt = 'Search button';
+    searchBarButton.addEventListener('click', () => {
+        getAndDisplayWeatherData(searchBar.value, currentUnit);
+        lastSearch = searchBar.value;
+    });
+    searchBarWrapper.appendChild(searchBarButton);
 
     const errorMessageContainer = document.createElement('section');
     errorMessageContainer.classList.add('error-message-container', 'hidden');
