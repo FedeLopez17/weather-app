@@ -390,13 +390,17 @@ function toggleUnits() {
     getAndDisplayWeatherData(lastSearch, currentUnit);
 }
 
+// I added this next function and event listeners because setting the height to 100vh was giving me some problems in mobile phones.
+// I found this very useful article explaining what the problem was and how to fix it:
+// https://ilxanlar.medium.com/you-shouldnt-rely-on-css-100vh-and-here-s-why-1b4721e74487
+
 function calculateAndSetViewportHeight() {
     const viewportHeight = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${viewportHeight}px`);
 }
 
-displayInitialScreen();
-
 calculateAndSetViewportHeight();
 window.addEventListener('resize', calculateAndSetViewportHeight);
 window.addEventListener('orientationchange', calculateAndSetViewportHeight);
+
+displayInitialScreen();
