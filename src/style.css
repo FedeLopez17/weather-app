@@ -364,4 +364,8 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     #custom-cursor {
         display: none !important;
     }
+    #loading-screen {
+        align-items: center;
+        justify-content: center;
+    }
 }
