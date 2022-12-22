@@ -16,6 +16,9 @@ main {
     position: relative;
     width: 100vw;
     height: 100vh;
+    min-height: -moz-available;
+    min-height: -webkit-fill-available;
+    min-height: fill-available;
     overflow: hidden;
 }
 
@@ -305,6 +308,9 @@ body.no-cursor #initial-screen #custom-cursor-toggle {
     position: absolute;
     width: 100vw;
     height: 100vh;
+    min-height: -moz-available;
+    min-height: -webkit-fill-available;
+    min-height: fill-available;
     top: 0;
     animation: fade-in 0.05s ease-in forwards;
     pointer-events: none;
