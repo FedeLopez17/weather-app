@@ -30,3 +30,7 @@ https://user-images.githubusercontent.com/95712292/209351931-d7abcacc-5da0-4f41-
 - Got more familiar with both webpack and npm, although I'm still far from mastering them, especially webpack.<br>
 - How useful browser extensions can be when developing a web application. For this project, I used the Responsive Viewer extension on Google Chrome.<br>
 - Acquired a deeper understanding of APIs and asynchronous JavaScript.<br>
+
+## Credits:
+ - I got the background videos from [Pexels](https://www.pexels.com/es-es/).
+ - I got the weather icons from: https://github.com/manifestinteractive/weather-underground-icons
